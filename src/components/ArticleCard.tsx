@@ -7,12 +7,14 @@ import { CalendarIcon, Clock } from 'lucide-react';
 interface ArticleCardProps {
   article: Article;
   className?: string;
+  style?: React.CSSProperties;
 }
 
-const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '' }) => {
+const ArticleCard: React.FC<ArticleCardProps> = ({ article, className = '', style }) => {
   return (
     <div 
       className={`group bg-card overflow-hidden rounded-xl border border-border/50 transition-all duration-300 hover:shadow-md hover:border-border ${className}`}
+      style={style}
     >
       <Link to={`/article/${article.id}`} className="block overflow-hidden relative aspect-[16/9]">
         <div className="absolute inset-0 bg-gray-900/10 group-hover:bg-gray-900/0 transition-all duration-300"></div>

@@ -4,8 +4,9 @@ import { useParams, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ArticleCard from '../components/ArticleCard';
+import Advertisement from '../components/Advertisement';
 import { articles, Article } from '../data/articles';
-import { CalendarIcon, Clock, ChevronLeft, Share2 } from 'lucide-react';
+import { CalendarIcon, Clock, ChevronLeft, Share2, Edit } from 'lucide-react';
 
 const ArticleDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -45,7 +46,7 @@ const ArticleDetail = () => {
       <Navbar />
       
       <main className="flex-grow pt-24 md:pt-28 pb-16">
-        <article className="container mx-auto px-6 md:px-0">
+        <div className="container mx-auto px-6 md:px-0">
           {/* Back link */}
           <div className="max-w-3xl mx-auto mb-8 px-0 md:px-12">
             <Link 
@@ -96,12 +97,21 @@ const ArticleDetail = () => {
                 <span className="font-medium">{article.author.name}</span>
               </div>
               
-              <button 
-                className="p-2 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
-                aria-label="Share article"
-              >
-                <Share2 size={18} />
-              </button>
+              <div className="flex items-center space-x-2">
+                <Link 
+                  to={`/article/${id}/edit`}
+                  className="p-2 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
+                  aria-label="Edit article"
+                >
+                  <Edit size={18} />
+                </Link>
+                <button 
+                  className="p-2 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
+                  aria-label="Share article"
+                >
+                  <Share2 size={18} />
+                </button>
+              </div>
             </div>
           </div>
           
@@ -116,35 +126,75 @@ const ArticleDetail = () => {
             </div>
           </div>
           
-          {/* Article content */}
-          <div className="max-w-3xl mx-auto px-0 md:px-12 animate-fade-in">
-            <div 
-              className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:font-semibold prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg"
-              dangerouslySetInnerHTML={{ __html: article.content }}
-            />
-            
-            {/* Article footer */}
-            <div className="mt-12 pt-8 border-t border-border">
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="text-muted-foreground mr-2">Tags:</span>
-                <Link 
-                  to={`/categories/${article.category.toLowerCase()}`} 
-                  className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-secondary text-foreground hover:bg-secondary/80 transition-colors"
-                >
-                  {article.category}
-                </Link>
-                <Link 
-                  to="/tags/mindfulness" 
-                  className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-secondary text-foreground hover:bg-secondary/80 transition-colors"
-                >
-                  Mindfulness
-                </Link>
-                <Link 
-                  to="/tags/society" 
-                  className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-secondary text-foreground hover:bg-secondary/80 transition-colors"
-                >
-                  Society
-                </Link>
+          {/* Banner advertisement */}
+          <div className="max-w-5xl mx-auto mb-8">
+            <Advertisement position="banner" />
+          </div>
+          
+          {/* Article content with sidebar */}
+          <div className="max-w-5xl mx-auto px-0 md:px-8 animate-fade-in">
+            <div className="flex flex-col lg:flex-row gap-8">
+              {/* Main content */}
+              <div className="lg:flex-[3]">
+                <div 
+                  className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:font-semibold prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg"
+                  dangerouslySetInnerHTML={{ __html: article.content }}
+                />
+                
+                {/* Inline advertisement */}
+                <Advertisement position="inline" className="my-10" />
+                
+                {/* Article footer */}
+                <div className="mt-12 pt-8 border-t border-border">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="text-muted-foreground mr-2">Tags:</span>
+                    <Link 
+                      to={`/categories/${article.category.toLowerCase()}`} 
+                      className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-secondary text-foreground hover:bg-secondary/80 transition-colors"
+                    >
+                      {article.category}
+                    </Link>
+                    <Link 
+                      to="/tags/mindfulness" 
+                      className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-secondary text-foreground hover:bg-secondary/80 transition-colors"
+                    >
+                      Mindfulness
+                    </Link>
+                    <Link 
+                      to="/tags/society" 
+                      className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-secondary text-foreground hover:bg-secondary/80 transition-colors"
+                    >
+                      Society
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Sidebar */}
+              <div className="lg:flex-1">
+                <div className="sticky top-28 space-y-6">
+                  <Advertisement position="sidebar" />
+                  
+                  <div className="bg-card border border-border/50 rounded-xl p-6">
+                    <h3 className="font-medium mb-4">About the author</h3>
+                    <div className="flex items-center mb-4">
+                      <img 
+                        src={article.author.avatar} 
+                        alt={article.author.name} 
+                        className="w-12 h-12 rounded-full mr-4 object-cover" 
+                      />
+                      <div>
+                        <h4 className="font-medium">{article.author.name}</h4>
+                        <p className="text-sm text-muted-foreground">Writer & Editor</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Expert writer with a passion for creating insightful content on a wide range of topics.
+                    </p>
+                  </div>
+                  
+                  <Advertisement position="sidebar" />
+                </div>
               </div>
             </div>
           </div>
@@ -161,7 +211,7 @@ const ArticleDetail = () => {
               </div>
             </div>
           )}
-        </article>
+        </div>
       </main>
       
       <Footer />

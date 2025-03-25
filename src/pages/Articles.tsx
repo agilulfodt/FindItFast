@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ArticleCard from '../components/ArticleCard';
+import Advertisement from '../components/Advertisement';
 import { articles } from '../data/articles';
 import { Search } from 'lucide-react';
 
@@ -99,17 +100,39 @@ const Articles = () => {
             </div>
           </div>
           
+          {/* Banner ad */}
+          <Advertisement position="banner" className="mb-10" />
+          
           {/* Articles grid */}
           {filteredArticles.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 animate-scale-in">
-              {filteredArticles.map((article, index) => (
-                <ArticleCard 
-                  key={article.id} 
-                  article={article} 
-                  className="animate-scale-in"
-                  style={{ animationDelay: `${index * 0.05}s` }}
-                />
-              ))}
+              {filteredArticles.map((article, index) => {
+                // Insert inline ads after every 6 articles
+                const articleElement = (
+                  <ArticleCard 
+                    key={article.id} 
+                    article={article} 
+                    className="animate-scale-in"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  />
+                );
+                
+                // Add inline ad after every 6 articles (but not at the very start)
+                if ((index + 1) % 6 === 0 && index !== 0) {
+                  return (
+                    <React.Fragment key={`ad-${index}`}>
+                      {articleElement}
+                      <Advertisement 
+                        key={`inline-ad-${index}`} 
+                        position="inline" 
+                        className="col-span-1 md:col-span-2 lg:col-span-3 my-2"
+                      />
+                    </React.Fragment>
+                  );
+                }
+                
+                return articleElement;
+              })}
             </div>
           ) : (
             <div className="text-center py-12">
@@ -127,6 +150,9 @@ const Articles = () => {
               </button>
             </div>
           )}
+          
+          {/* Bottom banner ad */}
+          <Advertisement position="banner" className="mt-16" />
         </div>
       </main>
       
