@@ -24,7 +24,7 @@ const Navbar = () => {
     >
       <div className="max-w-screen-xl mx-auto flex items-center justify-between">
         <Link to="/" className="text-xl md:text-2xl font-serif font-semibold tracking-tight">
-          Topic Trove
+          Find It Fast
         </Link>
 
         {/* Desktop Navigation */}

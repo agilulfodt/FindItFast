@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <Link to="/" className="text-xl font-serif font-semibold tracking-tight">
-              Topic Trove
+              Find It Fast
             </Link>
             <p className="mt-3 text-muted-foreground">
               Exploring diverse subjects through thoughtful, well-researched articles
@@ -72,7 +72,7 @@ const Footer: React.FC = () => {
         
         <div className="mt-10 pt-8 border-t border-border/30 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-muted-foreground mb-4 md:mb-0">
-            © {new Date().getFullYear()} Topic Trove. All rights reserved.
+            © {new Date().getFullYear()} Find It Fast. All rights reserved.
           </p>
           
           <div className="flex space-x-6">
