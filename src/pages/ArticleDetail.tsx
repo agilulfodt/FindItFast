@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -14,14 +13,11 @@ const ArticleDetail = () => {
   const [relatedArticles, setRelatedArticles] = useState<Article[]>([]);
   
   useEffect(() => {
-    // Scroll to top when component mounts or ID changes
     window.scrollTo(0, 0);
     
-    // Find the current article
     const currentArticle = articles.find(a => a.id === id) || null;
     setArticle(currentArticle);
     
-    // Find related articles (same category)
     if (currentArticle) {
       const related = articles
         .filter(a => a.category === currentArticle.category && a.id !== currentArticle.id)
@@ -47,7 +43,6 @@ const ArticleDetail = () => {
       
       <main className="flex-grow pt-24 md:pt-28 pb-16">
         <div className="container mx-auto px-6 md:px-0">
-          {/* Back link */}
           <div className="max-w-3xl mx-auto mb-8 px-0 md:px-12">
             <Link 
               to="/articles" 
@@ -58,7 +53,6 @@ const ArticleDetail = () => {
             </Link>
           </div>
           
-          {/* Article header */}
           <div className="max-w-3xl mx-auto mb-10 px-0 md:px-12 animate-fade-in">
             <div className="flex items-center space-x-3 mb-4">
               <Link 
@@ -115,7 +109,6 @@ const ArticleDetail = () => {
             </div>
           </div>
           
-          {/* Featured image */}
           <div className="mb-10 animate-scale-in">
             <div className="aspect-[16/9] max-w-5xl mx-auto overflow-hidden rounded-xl">
               <img 
@@ -126,25 +119,16 @@ const ArticleDetail = () => {
             </div>
           </div>
           
-          {/* Banner advertisement */}
-          <div className="max-w-5xl mx-auto mb-8">
-            <Advertisement position="banner" />
-          </div>
-          
-          {/* Article content with sidebar */}
           <div className="max-w-5xl mx-auto px-0 md:px-8 animate-fade-in">
             <div className="flex flex-col lg:flex-row gap-8">
-              {/* Main content */}
               <div className="lg:flex-[3]">
                 <div 
                   className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:font-semibold prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg"
                   dangerouslySetInnerHTML={{ __html: article.content }}
                 />
                 
-                {/* Inline advertisement */}
                 <Advertisement position="inline" className="my-10" />
                 
-                {/* Article footer */}
                 <div className="mt-12 pt-8 border-t border-border">
                   <div className="flex flex-wrap items-center gap-3">
                     <span className="text-muted-foreground mr-2">Tags:</span>
@@ -170,7 +154,6 @@ const ArticleDetail = () => {
                 </div>
               </div>
               
-              {/* Sidebar */}
               <div className="lg:flex-1">
                 <div className="sticky top-28 space-y-6">
                   <Advertisement position="sidebar" />
@@ -199,7 +182,6 @@ const ArticleDetail = () => {
             </div>
           </div>
           
-          {/* Related articles */}
           {relatedArticles.length > 0 && (
             <div className="max-w-5xl mx-auto mt-16 px-0 md:px-12">
               <h2 className="text-2xl font-serif font-semibold mb-8">Related Articles</h2>
